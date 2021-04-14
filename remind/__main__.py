@@ -36,8 +36,8 @@ def setup():
 def main():
     load_dotenv()
 
-    # token = os.environ['DISCORD_TOKEN']
-    token =os.getenv('BOT_TOKEN_REMIND')
+    token = os.environ['DISCORD_TOKEN']
+    # token =os.getenv('BOT_TOKEN_REMIND')
     if not token:
         logging.error('Token required')
         return
