@@ -131,6 +131,35 @@ async def bot_error_handler(ctx, exception):
 
 
 async def presence(bot):
-    await bot.change_presence(activity=discord.Activity(
-        type=discord.ActivityType.watching,
-        name='clist.by'))
+    await bot.wait_until_ready()
+
+    activities = ['playing', 'listening', 'watching']
+
+    names = {'playing' : f"on {len(bot.guilds)} servers",
+             'listening' : f"@{bot.user.name}",
+             'watching' : "clist.by"}
+
+    types = {'playing' : discord.ActivityType.playing,
+             'listening' : discord.ActivityType.listening,
+             'watching' : discord.ActivityType.watching}
+
+    while not bot.is_closed():
+
+        activity = random.choice(activities)
+
+        name = names[activity]
+
+        Type = types[activity] 
+    
+        await bot.change_presence(activity=discord.Activity(type=Type, name =name))
+
+        await asyncio.sleep(5)
+
+
+def get_prefix():
+    with open("prefixes.json", "r") as f:
+        prefixes = json.load(f)
+
+    pre = prefixes[str(msg.guild.id)] 
+
+    return pre
